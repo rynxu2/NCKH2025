@@ -180,7 +180,3 @@ def model_status():
         "model_loaded": model_binary is not None,
         "model_type": "CheXNet" if model_binary is not None else "Mock Model"
     })
-
-if __name__ == '__main__':
-    import time
-    app.run(debug=True)

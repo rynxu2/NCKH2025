@@ -465,7 +465,7 @@ function runDetailedAnalysis() {
 
         // Reset button state
         viewDetailsBtn.disabled = false;
-        viewDetailsBtn.innerHTML = '<i class="fas fa-search-plus mr-2"></i> View Detailed Analysis';
+        viewDetailsBtn.innerHTML = '<i class="fas fa-search-plus mr-2"></i> Xem Phân Tích Chi Tiết';
     })
     .catch(error => {
         console.error('Error in detailed analysis:', error);
@@ -473,7 +473,7 @@ function runDetailedAnalysis() {
 
         // Reset button state
         viewDetailsBtn.disabled = false;
-        viewDetailsBtn.innerHTML = '<i class="fas fa-search-plus mr-2"></i> View Detailed Analysis';
+        viewDetailsBtn.innerHTML = '<i class="fas fa-search-plus mr-2"></i> Xem Phân Tích Chi Tiết';
     });
 }
 
@@ -483,7 +483,7 @@ function showDetailedResults(data) {
 
     let diseasesHTML = `
         <div class="p-4 bg-purple-50 rounded-lg border border-purple-100">
-            <h4 class="font-medium text-purple-700 mb-2">Detected Diseases</h4>
+            <h4 class="font-medium text-purple-700 mb-2">Bệnh Đã Phát Hiện</h4>
             <div class="space-y-4">
     `;
 
