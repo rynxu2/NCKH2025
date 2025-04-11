@@ -1,0 +1,82 @@
+/*!* static/css/styles.css *!*/
+/*.dropzone {*/
+/*    border: 2px dashed #3b82f6;*/
+/*    transition: all 0.3s ease;*/
+/*}*/
+
+/*.dropzone.active {*/
+/*    border-color: #10b981;*/
+/*    background-color: #f0f9ff;*/
+/*}*/
+
+/*.result-card {*/
+/*    transition: all 0.5s ease;*/
+/*    transform: translateY(20px);*/
+/*    opacity: 0;*/
+/*}*/
+
+/*.result-card.show {*/
+/*    transform: translateY(0);*/
+/*    opacity: 1;*/
+/*}*/
+
+/*.pulse {*/
+/*    animation: pulse 2s infinite;*/
+/*}*/
+
+/*#camera-preview {*/
+/*    width: 100%;*/
+/*    max-height: 400px;*/
+/*    object-fit: contain;*/
+/*    background-color: #000;*/
+/*}*/
+
+/*#camera-modal {*/
+/*    transition: all 0.3s ease;*/
+/*    opacity: 0;*/
+/*    visibility: hidden;*/
+/*}*/
+
+/*#camera-modal.open {*/
+/*    opacity: 1;*/
+/*    visibility: visible;*/
+/*}*/
+
+/*@keyframes pulse {*/
+/*    0% { opacity: 0.6; }*/
+/*    50% { opacity: 1; }*/
+/*    100% { opacity: 0.6; }*/
+/*}*/
+.dropzone {
+    border: 2px dashed #d1d5db;
+    transition: all 0.3s ease;
+}
+.dropzone.active {
+    border-color: #3b82f6;
+    background-color: #f0f7ff;
+}
+.pulse {
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+.disease-indicator {
+    height: 8px;
+    border-radius: 4px;
+    background-color: #e5e7eb;
+}
+.disease-indicator-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+.result-card {
+    transition: all 0.3s ease;
+}
+.result-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}

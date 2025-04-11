@@ -1,0 +1,127 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X-Ray Image Diagnosis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4 py-12">
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-800 mb-3">Chẩn Đoán Hình Ảnh X-Quang</h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                Tải lên hình ảnh X-quang ngực để phân tích tự động và chẩn đoán sơ bộ bằng mô hình AI của chúng tôi.
+            </p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="max-w-4xl mx-auto">
+            <!-- Upload Section -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8 transition-all duration-300 hover:shadow-lg">
+                <div class="p-8">
+                    <div
+                        id="dropzone"
+                        class="dropzone rounded-lg p-12 text-center cursor-pointer"
+                        ondragover="event.preventDefault(); document.getElementById('dropzone').classList.add('active')"
+                        ondragleave="document.getElementById('dropzone').classList.remove('active')"
+                        ondrop="event.preventDefault(); document.getElementById('dropzone').classList.remove('active'); handleDrop(event)"
+                    >
+                        <div class="flex flex-col items-center justify-center space-y-4">
+                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-cloud-upload-alt text-blue-500 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-700">Kéo & Thả Hình Ảnh X-Quang</h3>
+                            <p class="text-gray-500">or</p>
+                            <div class="flex flex-col sm:flex-row gap-3">
+                                <label for="file-upload" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium cursor-pointer hover:bg-blue-700 transition">
+                                    <span>Chọn Tệp Tin</span>
+                                    <input id="file-upload" type="file" class="hidden" accept="image/*" onchange="handleFileSelect(event)">
+                                </label>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-2">Hỗ trợ JPG, PNG (Max 5MB)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Processing Section (Hidden by default) -->
+            <div id="processing-section" class="hidden bg-white rounded-xl shadow-md overflow-hidden mb-8 p-8">
+                <div class="flex flex-col items-center justify-center space-y-6">
+                    <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center pulse">
+                        <i class="fas fa-spinner fa-spin text-blue-600 text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-700">Analyzing X-Ray Image</h3>
+                    <p class="text-gray-500 text-center max-w-md">
+                        Mô hình AI của chúng tôi đang xử lý hình ảnh X-quang của bạn để phát hiện các bất thường tiềm ẩn.
+                        Quá trình này có thể mất chút thời gian...
+                    </p>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                        <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Section (Hidden by default) -->
+            <div id="results-section" class="hidden">
+                <div class="flex flex-col md:flex-row gap-6">
+                    <!-- Image Preview -->
+                    <div class="flex-1 bg-white rounded-xl shadow-md overflow-hidden">
+                        <div class="p-6">
+                            <h3 class="text-lg font-semibold text-gray-700 mb-4">X-Ray Preview</h3>
+                            <div class="bg-gray-100 rounded-lg overflow-hidden">
+                                <img id="preview-image" src="" alt="Uploaded X-Ray" class="w-full h-auto object-contain max-h-80 mx-auto">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Diagnosis Results -->
+                    <div class="flex-1">
+                        <div class="result-card bg-white rounded-xl shadow-md overflow-hidden p-6">
+                            <h3 class="text-lg font-semibold text-gray-700 mb-4">Kết Quả Chẩn Đoán</h3>
+
+                            <div id="diagnosis-results" class="space-y-4">
+                                <!-- Results will be inserted here by JavaScript -->
+                            </div>
+
+                            <!-- View Details Button (Hidden by default) -->
+                            <div id="view-details-container" class="mt-6 hidden">
+                                <button id="view-details-btn" onclick="runDetailedAnalysis()" class="w-full px-6 py-3 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition flex items-center justify-center">
+                                    <i class="fas fa-search-plus mr-2"></i> Xem Phân Tích Chi Tiết
+                                </button>
+                            </div>
+
+                            <!-- Model 2 Results (Hidden by default) -->
+                            <div id="model2-results" class="hidden mt-6 pt-6 border-t border-gray-200">
+                                <h4 class="text-md font-semibold text-gray-700 mb-3">Bệnh Đã Phát Hiện</h4>
+                                <div id="model2-results-content" class="space-y-4">
+                                    <!-- Detailed results will be inserted here -->
+                                </div>
+                            </div>
+
+                            <div class="mt-8 pt-6 border-t border-gray-200">
+                                <h4 class="text-sm font-medium text-gray-500 mb-3">Tuyên bố miễn trừ trách nhiệm</h4>
+                                <p class="text-xs text-gray-500">
+                                    Chẩn đoán có sự hỗ trợ của AI này chỉ mang tính chất sàng lọc ban đầu và không thể thay thế cho ý kiến chuyên môn y tế.
+                                    Hãy luôn tham khảo ý kiến của nhân viên y tế có chuyên môn để được chẩn đoán chính xác.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="mt-16 text-center text-gray-500 text-sm">
+            <p>© 2023 Medical AI Diagnostics. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
